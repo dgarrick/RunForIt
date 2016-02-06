@@ -2,6 +2,8 @@
 using UnityEngine.SceneManagement;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.UI;
+using UnityStandardAssets.Characters.FirstPerson;
 
 public class MonsterAI : MonoBehaviour {
 
@@ -9,9 +11,13 @@ public class MonsterAI : MonoBehaviour {
     private Transform[] playerLocs;
     private GameObject[] playerObjs;
 
+
+
     // Use this for initialization
     void Start () {
 		agent = GetComponent<NavMeshAgent>();
+
+
     }
 	
 	// Update is called once per frame
@@ -51,15 +57,7 @@ public class MonsterAI : MonoBehaviour {
         return closest;
     }
 
-    void OnCollisionEnter(Collision other)
-    {
-        Debug.Log("Nom nom nom!");
-        if (other.gameObject.tag == "Player")
-        {
-            //Destroy(other.gameObject);
-            other.gameObject.SetActive(false);
-        }
-    }
+
 
     //Updates the Monster's current target
     void setTarget(Transform t) {
