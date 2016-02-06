@@ -67,6 +67,10 @@ public class FlashlightScript : MonoBehaviour
             beam.intensity = 0;
         }
     }
+    public void increaseCharge(float n)
+    {
+        charge += n;
+    }
 
 }
 

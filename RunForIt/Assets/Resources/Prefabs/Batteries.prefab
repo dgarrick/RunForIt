@@ -11,6 +11,7 @@ GameObject:
   - 33: {fileID: 3316292}
   - 136: {fileID: 13699070}
   - 23: {fileID: 2315148}
+  - 122: {fileID: 12204088}
   m_Layer: 0
   m_Name: Batteries
   m_TagString: Battery
@@ -63,6 +64,17 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 137302}
   m_Mesh: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!122 &12204088
+Halo:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 137302}
+  m_Enabled: 1
+  m_Color:
+    serializedVersion: 2
+    rgba: 4283948268
+  m_Size: 0.4
 --- !u!136 &13699070
 CapsuleCollider:
   m_ObjectHideFlags: 1
@@ -103,6 +115,14 @@ Prefab:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: f62b52b2d4b721742a0bc5c6b4db468d, type: 2}
+    - target: {fileID: 0}
+      propertyPath: m_Color.rgba
+      value: 4283948268
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_Size
+      value: 0.4
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 137302}
