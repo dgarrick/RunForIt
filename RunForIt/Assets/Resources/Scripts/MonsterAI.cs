@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -16,11 +17,14 @@ public class MonsterAI : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         playerObjs = GameObject.FindGameObjectsWithTag("Player");
-        Debug.Log(playerObjs.Length);
         playerLocs = new Transform[playerObjs.Length];
+        //TODO change to 1 for actual game
+        if (playerObjs.Length == 0)
+        {
+            SceneManager.LoadScene(1);
+        }
         updatePlayerLocs();
         Transform target = findClosestTransform();
-        //Debug.Log(target);
         agent.SetDestination(target.position);
 	}
 
@@ -47,8 +51,18 @@ public class MonsterAI : MonoBehaviour {
         return closest;
     }
 
-	//Updates the Monster's current target
-	void setTarget(Transform t) {
+    void OnCollisionEnter(Collision other)
+    {
+        Debug.Log("Nom nom nom!");
+        if (other.gameObject.tag == "Player")
+        {
+            //Destroy(other.gameObject);
+            other.gameObject.SetActive(false);
+        }
+    }
+
+    //Updates the Monster's current target
+    void setTarget(Transform t) {
 
 	}
 }
