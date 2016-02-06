@@ -44,6 +44,12 @@ public class PlayerPickUp : MonoBehaviour {
 			gameObject.GetComponent<RigidbodyFirstPersonController>().disableMovement();
 			dead = true;
 		}
+        if(other.gameObject.tag == "Battery")
+        {
+            Destroy(other.gameObject);
+            other.gameObject.SetActive(false);
+            attachedLight.GetComponent<FlashlightScript>().increaseCharge(10f);
+        }
     }
 
 	void OnGUI() {
