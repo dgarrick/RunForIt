@@ -44,7 +44,7 @@ public class MonsterAI : MonoBehaviour {
 
     Transform findClosestTransform()
     {
-        float min = 1000000000;
+        float min = 10000000000000;
         Transform closest = null;
         foreach (Transform otherTrans in playerLocs)
         {

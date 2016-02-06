@@ -134,7 +134,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
             if (isServer)
             {
                 GameObject monster = Resources.Load("Prefabs/Monster") as GameObject;
-                GameObject.Instantiate(monster, new Vector3(50, 0, 50), new Quaternion());
+                GameObject.Instantiate(monster, new Vector3(50, 5, 50), new Quaternion());
             }
         }
 
