@@ -71,7 +71,7 @@ public class ObjectSpawner : NetworkBehaviour {
                 initialSpawn = true;
                 Debug.Log("Spawning objects...");
                 //Do Initial spawning
-               if (isServer && GameObject.FindGameObjectsWithTag("Monster").Length == 0)
+               if (GameObject.FindGameObjectsWithTag("Monster").Length == 0)
                 {
                     Debug.Log("Spawning monster from ObjectSpawner!");
                     GameObject monsterPrefab = Resources.Load("Prefabs/Monster") as GameObject;
