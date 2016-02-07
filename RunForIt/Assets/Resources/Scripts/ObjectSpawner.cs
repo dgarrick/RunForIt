@@ -59,8 +59,8 @@ public class ObjectSpawner : NetworkBehaviour {
         {
             if (!players.Contains(player))
             {
-                Debug.Log("Discovered new player! there are now " + players.Count + " in the game");
                 players.Add(player);
+                Debug.Log("Discovered new player! there are now " + players.Count + " in the game");
                 spawnEssentialsNear(player);
             }
         }
