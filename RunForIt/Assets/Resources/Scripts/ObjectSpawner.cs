@@ -8,16 +8,19 @@ public class ObjectSpawner : NetworkBehaviour {
 
     bool initialSpawn = false;
     int playerCount = 0;
+    private int tick = 0;
     HashSet<GameObject> players;
+    GameObject batteryPrefab = Resources.Load("Prefabs/Batteries") as GameObject;
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start () {
         players = new HashSet<GameObject>();
 	}
 
     // Update is called once per frame
     void Update() {
-
+        
+        // Check for new players to spawn stuff for
         GameObject[] playersScraped = GameObject.FindGameObjectsWithTag("Player");
         foreach (GameObject obj in playersScraped)
         {
@@ -29,7 +32,24 @@ public class ObjectSpawner : NetworkBehaviour {
             }
         }
 
-    if (!initialSpawn && players.Count != 0 && !initialSpawn)
+        // Update tick
+        if (tick > 100000000)
+            tick = 0;
+        tick += 1;
+
+        // Consider spawning batteries
+        // Every 40th seconds @ 60 FPS for each player (2 players = 1 per 20s, 3 players = 1 per 13s)
+        if (tick % (4800 / players.Count) == 0)
+        {
+            // TODO Definitely too small of a spawn range...
+            GameObject batteryToSpawn = (GameObject)Instantiate(batteryPrefab, new Vector3(Random.Range(-20, 220), 10, Random.Range(-5, 120)), new Quaternion());
+            NetworkServer.Spawn(batteryToSpawn);
+            Debug.Log("Battery spawned at " + batteryToSpawn.transform.position);
+        }
+        
+
+
+    if (players.Count != 0 && !initialSpawn)
             initialSpawns();
     }
 
