@@ -12,6 +12,7 @@ GameObject:
   - 136: {fileID: 13699070}
   - 23: {fileID: 2315148}
   - 122: {fileID: 12204088}
+  - 114: {fileID: 11410960}
   m_Layer: 0
   m_Name: Batteries
   m_TagString: Battery
@@ -64,6 +65,38 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 137302}
   m_Mesh: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &11410960
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 137302}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 372142912, guid: 870353891bb340e2b2a9c8707e7419ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SceneId:
+    m_Value: 0
+  m_AssetId:
+    i0: 4
+    i1: 2
+    i2: 150
+    i3: 221
+    i4: 253
+    i5: 43
+    i6: 126
+    i7: 20
+    i8: 11
+    i9: 9
+    i10: 230
+    i11: 108
+    i12: 121
+    i13: 98
+    i14: 11
+    i15: 207
+  m_ServerOnly: 0
+  m_LocalPlayerAuthority: 0
 --- !u!122 &12204088
 Halo:
   m_ObjectHideFlags: 1

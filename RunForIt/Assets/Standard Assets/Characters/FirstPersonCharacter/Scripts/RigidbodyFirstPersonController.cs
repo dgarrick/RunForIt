@@ -124,16 +124,11 @@ namespace UnityStandardAssets.Characters.FirstPerson
 			canMove = true;
 				m_RigidBody = GetComponent<Rigidbody> ();
 				m_Capsule = GetComponent<CapsuleCollider> ();
-            if (isServer && GameObject.FindGameObjectsWithTag("Monster").Length == 0) {
-                Debug.Log("Spawning monster from server-side client!");
-                GameObject monsterPrefab = Resources.Load("Prefabs/Monster") as GameObject;
-                GameObject monster = (GameObject)Instantiate(monsterPrefab, new Vector3(50, 5, 50), new Quaternion());
-                NetworkServer.Spawn(monster);
-            }
             if (isLocalPlayer) {
 				cam = GetComponentInChildren<Camera>();
 				mouseLook.Init (transform, cam.transform);
-				Debug.Log ("LOCAL!!!!");
+                if (isServer)
+                    GameObject.Instantiate(Resources.Load("Prefabs/ObjectSpawner") as GameObject, new Vector3(0, 0, 0), new Quaternion());
 			}
 			if(!isLocalPlayer) {
 				GetComponentInChildren<Camera>().gameObject.SetActive(false);
@@ -198,7 +193,14 @@ namespace UnityStandardAssets.Characters.FirstPerson
 			}
         }
 
-        // This belongs in another player script, as it is not a pickup
+        public void kill()
+        {
+            disableMovement();
+            dead = true;
+        }
+
+
+
         void OnGUI()
         {
             if (isLocalPlayer)

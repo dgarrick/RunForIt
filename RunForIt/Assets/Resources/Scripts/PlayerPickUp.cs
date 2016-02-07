@@ -16,9 +16,6 @@ public class PlayerPickUp : MonoBehaviour {
     {
         floatLight = Resources.Load("Prefabs/FlashLightActive") as GameObject;
 		dead = false;
-
-		messageWidth = 200;
-		messageHeight = 25;
     }
 
 
@@ -26,7 +23,7 @@ public class PlayerPickUp : MonoBehaviour {
     void OnCollisionEnter(Collision other)
     {
         Debug.Log("collision with " +other.gameObject.tag);
-        if (other.gameObject.name == "FlashLightInactive")
+        if (other.gameObject.tag == "Item")
         {
             Destroy(other.gameObject);
             other.gameObject.SetActive(false);
@@ -35,26 +32,12 @@ public class PlayerPickUp : MonoBehaviour {
             attachedLight = Instantiate(floatLight, new Vector3(camFor.position.x+1.0f,camFor.position.y-1.0f,camFor.position.z-1.0f), camFor.rotation) as GameObject;
             attachedLight.transform.SetParent(camFor);
         }
-        //This isn't exactly a pickup...
-		if (other.gameObject.tag == "Monster")
-		{
-            kill();
-		}
         if(other.gameObject.tag == "Battery")
         {
             Destroy(other.gameObject);
             other.gameObject.SetActive(false);
             attachedLight.GetComponent<FlashlightScript>().increaseCharge(10f);
         }
-    }
-
-    // This belongs in another player script, as it is not a pickup
-    public void kill()
-    {
-        RigidbodyFirstPersonController controller = gameObject.GetComponent<RigidbodyFirstPersonController>();
-        controller.disableMovement();
-        controller.dead = true;
-        dead = true;
     }
 
     public bool isDead()

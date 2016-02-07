@@ -57,7 +57,7 @@ public class MonsterAI : NetworkBehaviour {
         //Hack for non-moving players surviving the monster being right on top of them
         if (Vector3.Distance(transform.position, targetObject.transform.position) < 1.0)
         {
-            targetObject.GetComponent<PlayerPickUp>().kill();
+            targetObject.GetComponent<RigidbodyFirstPersonController>().kill();
         }
     }
 

@@ -12,6 +12,8 @@ GameObject:
   - 65: {fileID: 6599054}
   - 23: {fileID: 2331012}
   - 54: {fileID: 5465656}
+  - 114: {fileID: 11484542}
+  - 122: {fileID: 12234576}
   m_Layer: 0
   m_Name: FlashLightInactive
   m_TagString: Item
@@ -91,6 +93,49 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &11484542
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 163806}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 372142912, guid: 870353891bb340e2b2a9c8707e7419ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SceneId:
+    m_Value: 0
+  m_AssetId:
+    i0: 96
+    i1: 41
+    i2: 116
+    i3: 100
+    i4: 24
+    i5: 102
+    i6: 220
+    i7: 4
+    i8: 89
+    i9: 144
+    i10: 162
+    i11: 81
+    i12: 226
+    i13: 136
+    i14: 179
+    i15: 53
+  m_ServerOnly: 0
+  m_LocalPlayerAuthority: 0
+--- !u!122 &12234576
+Halo:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 163806}
+  m_Enabled: 1
+  m_Color:
+    serializedVersion: 2
+    rgba: 4290274134
+  m_Size: 2
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
@@ -117,6 +162,14 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: m_TagString
       value: Item
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_Color.rgba
+      value: 4290274134
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_Size
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
