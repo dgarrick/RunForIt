@@ -36,7 +36,9 @@ public class PlayerPickUp : MonoBehaviour {
         {
             Destroy(other.gameObject);
             other.gameObject.SetActive(false);
-            attachedLight.GetComponent<FlashlightScript>().increaseCharge(10f);
+            // Check if they have a light first
+            if (attachedLight != null)
+              attachedLight.GetComponent<FlashlightScript>().increaseCharge(10f);
         }
     }
 
