@@ -22,7 +22,8 @@ public class PlayerPickUp : MonoBehaviour {
     // Use this for initialization
     void OnCollisionEnter(Collision other)
     {
-        Debug.Log("collision with " +other.gameObject.tag);
+        if (other.gameObject.tag != "Untagged")
+          Debug.Log("collision with " +other.gameObject.tag);
         if (other.gameObject.tag == "Item")
         {
             Destroy(other.gameObject);
