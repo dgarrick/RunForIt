@@ -25,13 +25,14 @@ public class MonsterAI : MonoBehaviour {
         playerObjs = GameObject.FindGameObjectsWithTag("Player");
         playerLocs = new Transform[playerObjs.Length];
         //TODO change to 1 for actual game
-        if (playerObjs.Length == 0)
-        {
-            SceneManager.LoadScene(1);
-        }
+        //if (playerObjs.Length == 0)
+        //{
+        //    SceneManager.LoadScene(1);
+        //}
         updatePlayerLocs();
         Transform target = findClosestTransform();
         agent.SetDestination(target.position);
+        Debug.Log(target.transform);
 	}
 
     void updatePlayerLocs()

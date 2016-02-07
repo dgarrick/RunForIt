@@ -12,6 +12,7 @@ public class PlayerPickUp : MonoBehaviour {
 	int messageWidth;
 	int messageHeight;
 	bool dead = false;
+    bool hasLight = false;
     GameObject attachedLight;
 
     void Start()
@@ -29,8 +30,10 @@ public class PlayerPickUp : MonoBehaviour {
     void OnCollisionEnter(Collision other)
     {
         Debug.Log("collision");
-        if (other.gameObject.name == "FlashLightInactive")
+        //TODO fix Item tag to Light tag
+        if (other.gameObject.tag == "Item" && hasLight == false)
         {
+            hasLight = true;
             Destroy(other.gameObject);
             other.gameObject.SetActive(false);
             follow = true;
@@ -38,7 +41,7 @@ public class PlayerPickUp : MonoBehaviour {
             attachedLight = Instantiate(floatLight, new Vector3(camFor.position.x+1.0f,camFor.position.y-1.0f,camFor.position.z-1.0f), camFor.rotation) as GameObject;
             attachedLight.transform.SetParent(camFor);
         }
-		if (other.gameObject.name == "Monster(Clone)")
+		if (other.gameObject.name == "Monster")
 		{
 			Debug.Log ("monster");
 			gameObject.GetComponent<RigidbodyFirstPersonController>().disableMovement();
