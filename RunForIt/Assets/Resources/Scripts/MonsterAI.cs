@@ -1,66 +1,63 @@
 ﻿using UnityEngine;
-using UnityEngine.SceneManagement;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine.UI;
-using UnityStandardAssets.Characters.FirstPerson;
 
 public class MonsterAI : MonoBehaviour {
 
 	private NavMeshAgent agent;
-    private Transform[] playerLocs;
     private GameObject[] playerObjs;
+
+    private GameObject targetObject;
+    private Transform targetTransform;
+
+    // Tracks frames for efficient computations
+    private int tick;
 
 
 
     // Use this for initialization
     void Start () {
 		agent = GetComponent<NavMeshAgent>();
-
-
+        tick = 0;
     }
 	
 	// Update is called once per frame
 	void Update () {
-        playerObjs = GameObject.FindGameObjectsWithTag("Player");
-        playerLocs = new Transform[playerObjs.Length];
-        //TODO change to 1 for actual game
-        if (playerObjs.Length == 0)
-        {
-            SceneManager.LoadScene(1);
+        tick += 1;
+
+        //Look for new targets every 5 seconds (@ 60 FPS)
+        if (tick % 300 == 0) {
+            //TODO move this line to startup code when it is written
+            playerObjs = GameObject.FindGameObjectsWithTag("Player");
+            considerNewTargets();
         }
-        updatePlayerLocs();
-        Transform target = findClosestTransform();
-        agent.SetDestination(target.position);
+
+        //Recompute where the current target is every 10th frame
+        if (tick % 10 == 0) {
+            updateTargetTransform();
+            agent.SetDestination(targetTransform.position);
+        }
+
+        // Reset tick if it gets huge. Just cleanup
+        if (tick > 1000000000) {
+            tick = 0;
+        }
+
+        //TODO check if game ended here.
 	}
 
-    void updatePlayerLocs()
-    {
-        for (int i = 0; i < playerObjs.Length; ++i)
-        {
-            playerLocs[i] = playerObjs[i].transform;
-        }
+    void updateTargetTransform() {
+        targetTransform = targetObject.transform;
     }
 
-    Transform findClosestTransform()
-    {
-        float min = 10000000000000;
-        Transform closest = null;
-        foreach (Transform otherTrans in playerLocs)
-        {
-            float thisDist = Vector3.Distance(transform.position, otherTrans.position);
+    void considerNewTargets() {
+        float min = float.MaxValue;
+        foreach (GameObject player in playerObjs) {
+            // Distance between the monster and the player we are considering
+            float thisDist = Vector3.Distance(transform.position, player.transform.position);
+            //This is *so close* to being a perfect spot for a ternary operator
             if (thisDist < min) {
                 min = thisDist;
-                closest = otherTrans;
+                targetObject = player;
             }
         }
-        return closest;
     }
-
-
-
-    //Updates the Monster's current target
-    void setTarget(Transform t) {
-
-	}
 }
