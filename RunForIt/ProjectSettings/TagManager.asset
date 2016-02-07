@@ -5,6 +5,10 @@ TagManager:
   serializedVersion: 2
   tags:
   - PlayerCam
+  - Battery
+  - Fire
+  - Item
+  - Monster
   layers:
   - Default
   - TransparentFX

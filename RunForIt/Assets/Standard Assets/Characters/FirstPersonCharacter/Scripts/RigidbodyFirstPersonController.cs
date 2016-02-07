@@ -9,6 +9,8 @@ namespace UnityStandardAssets.Characters.FirstPerson
     [RequireComponent(typeof (CapsuleCollider))]
     public class RigidbodyFirstPersonController : NetworkBehaviour
     {
+
+        public bool dead = false;
         [Serializable]
         public class MovementSettings
         {
@@ -122,8 +124,13 @@ namespace UnityStandardAssets.Characters.FirstPerson
 			canMove = true;
 				m_RigidBody = GetComponent<Rigidbody> ();
 				m_Capsule = GetComponent<CapsuleCollider> ();
-
-			if (isLocalPlayer) {
+            if (isServer && GameObject.FindGameObjectsWithTag("Monster").Length == 0) {
+                Debug.Log("Spawning monster from server-side client!");
+                GameObject monsterPrefab = Resources.Load("Prefabs/Monster") as GameObject;
+                GameObject monster = (GameObject)Instantiate(monsterPrefab, new Vector3(50, 5, 50), new Quaternion());
+                NetworkServer.Spawn(monster);
+            }
+            if (isLocalPlayer) {
 				cam = GetComponentInChildren<Camera>();
 				mouseLook.Init (transform, cam.transform);
 				Debug.Log ("LOCAL!!!!");
@@ -131,11 +138,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
 			if(!isLocalPlayer) {
 				GetComponentInChildren<Camera>().gameObject.SetActive(false);
 			}
-            if (isServer)
-            {
-                GameObject monster = Resources.Load("Prefabs/Monster") as GameObject;
-                GameObject.Instantiate(monster, new Vector3(50, 5, 50), new Quaternion());
-            }
+            
         }
 
 
@@ -193,6 +196,13 @@ namespace UnityStandardAssets.Characters.FirstPerson
 				}
 				m_Jump = false;
 			}
+        }
+
+        // This belongs in another player script, as it is not a pickup
+        void OnGUI()
+        {
+            if (isLocalPlayer)
+             if (dead) GUI.TextField(new Rect(Screen.width/2 - 100 , Screen.height/2 - 25, 200, 50), "You have been brutally murdered.");
         }
 
 

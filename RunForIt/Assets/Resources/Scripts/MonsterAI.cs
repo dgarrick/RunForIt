@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
+using UnityEngine.Networking;
+using UnityStandardAssets.Characters.FirstPerson;
 
-public class MonsterAI : MonoBehaviour {
+public class MonsterAI : NetworkBehaviour {
 
 	private NavMeshAgent agent;
     private GameObject[] playerObjs;
@@ -15,6 +17,9 @@ public class MonsterAI : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
+        // Default values to prevent excess errors at startup
+        playerObjs = new GameObject[0];
+        targetObject = new GameObject();
 		agent = GetComponent<NavMeshAgent>();
         tick = 0;
     }
@@ -31,7 +36,7 @@ public class MonsterAI : MonoBehaviour {
         }
 
         //Recompute where the current target is every 10th frame
-        if (tick % 10 == 0) {
+        if (tick % 10 == 0 && playerObjs.Length > 0) {
             updateTargetTransform();
             agent.SetDestination(targetTransform.position);
         }
@@ -45,7 +50,15 @@ public class MonsterAI : MonoBehaviour {
 	}
 
     void updateTargetTransform() {
+        if (targetObject == null)
+            considerNewTargets();
         targetTransform = targetObject.transform;
+
+        //Hack for non-moving players surviving the monster being right on top of them
+        if (Vector3.Distance(transform.position, targetObject.transform.position) < 1.0)
+        {
+            targetObject.GetComponent<PlayerPickUp>().kill();
+        }
     }
 
     void considerNewTargets() {
@@ -53,10 +66,13 @@ public class MonsterAI : MonoBehaviour {
         foreach (GameObject player in playerObjs) {
             // Distance between the monster and the player we are considering
             float thisDist = Vector3.Distance(transform.position, player.transform.position);
-            //This is *so close* to being a perfect spot for a ternary operator
             if (thisDist < min) {
-                min = thisDist;
-                targetObject = player;
+                //Ensure that the player we are considering is alive
+                RigidbodyFirstPersonController controller = player.GetComponent<RigidbodyFirstPersonController>();
+                if (!controller.dead) { 
+                    min = thisDist;
+                    targetObject = player;
+                }
             }
         }
     }
