@@ -7,43 +7,30 @@ public class FlashlightScript : MonoBehaviour
     private float charge;
     private Light beam;
     private bool isOn;
-    private bool isReallyOn;
-    void Start()
-    {
+    private bool isBright;
+
+    void Start() {
         charge = 40; //8 is max
         isOn = true;
-        isReallyOn = false;
+        isBright = false;
         beam = gameObject.GetComponent("Light") as Light;
         InvokeRepeating("checkCharge", 0, 0.2f);
         beam.range = charge;
     }
 
-    void Update()
-    {
-        if (Input.GetMouseButtonDown(0))
-        {
-            if (isOn)
-            {
-                isOn = false;
+    void Update() {
+        if (Input.GetMouseButtonDown(0)) {
+            isBright = false;
+            if (isOn) 
                 beam.range = 0;
-            }
-            else
-            {
-                isOn = true;
-            }
+            isOn = !isOn;  
         }
         if (Input.GetMouseButtonDown(1))
         {
             isOn = false;
-            if (isReallyOn)
-            {
-                isReallyOn = false;
+            if (isBright)
                 beam.range = 0;
-            }
-            else
-            {
-                isReallyOn = true;
-            }
+            isBright = !isBright;
         }
     }
 
@@ -55,7 +42,7 @@ public class FlashlightScript : MonoBehaviour
             beam.range = Mathf.Pow(charge, 2);
             beam.intensity = 3;
         }
-        else if(isReallyOn && charge > 0)
+        else if(isBright && charge > 0)
         {
             charge -= 0.3f;
             beam.range = Mathf.Pow(charge,2);
