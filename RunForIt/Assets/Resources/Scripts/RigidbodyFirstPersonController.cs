@@ -7,7 +7,8 @@ using UnityStandardAssets.CrossPlatformInput;
 [RequireComponent(typeof(CapsuleCollider))]
 public class RigidbodyFirstPersonController : NetworkBehaviour
 {
-
+    TransportLayer transportLayer;
+    int flashlightStatus;
     public bool dead = false;
     [Serializable]
     public class MovementSettings
@@ -125,6 +126,8 @@ public class RigidbodyFirstPersonController : NetworkBehaviour
         m_Capsule = GetComponent<CapsuleCollider>();
         if (isLocalPlayer)
         {
+            transportLayer = GameObject.FindObjectOfType<TransportLayer>();
+            flashlightStatus = 1;
             cam = GetComponentInChildren<Camera>();
             mouseLook.Init(transform, cam.transform);
             if (isServer)
@@ -140,9 +143,44 @@ public class RigidbodyFirstPersonController : NetworkBehaviour
 
     private void Update()
     {
-        if (isLocalPlayer)
+        if (isLocalPlayer && hasAuthority)
         {
-            RotateView();
+            if (gameObject.GetComponentInChildren<Light>() != null)
+            {
+                GameObject lightObject = gameObject.GetComponentInChildren<Light>().gameObject;
+                GameObject cameraObject = gameObject.GetComponentInChildren<Camera>().gameObject;
+                lightObject.transform.SetParent(cameraObject.transform);
+            }
+            if (Input.GetMouseButtonDown(0))
+            {
+                Debug.Log("Left click!");
+                if (flashlightStatus == 0 || flashlightStatus == 2)
+                {
+                    Debug.Log("On!");
+                    CmdChangeLightStatus(gameObject.GetComponent<NetworkIdentity>().netId, 1);
+                    flashlightStatus = 1;
+                }
+                else if (flashlightStatus == 1)
+                {
+                    Debug.Log("Off!");
+                    CmdChangeLightStatus(gameObject.GetComponent<NetworkIdentity>().netId, 0);
+                    flashlightStatus = 0;
+                }
+            }
+            if (Input.GetMouseButtonDown(1))
+            {
+                if (flashlightStatus == 0 || flashlightStatus == 1)
+                {
+                    CmdChangeLightStatus(gameObject.GetComponent<NetworkIdentity>().netId, 2);
+                    flashlightStatus = 2;
+                }
+                else if (flashlightStatus == 2)
+                {
+                    CmdChangeLightStatus(gameObject.GetComponent<NetworkIdentity>().netId, 0);
+                    flashlightStatus = 0;
+                }
+            }
+                RotateView();
 
             if (CrossPlatformInputManager.GetButtonDown("Jump") && !m_Jump)
             {
@@ -156,6 +194,7 @@ public class RigidbodyFirstPersonController : NetworkBehaviour
     {
         if (isLocalPlayer)
         {
+
             GroundCheck();
             Vector2 input = GetInput();
 
@@ -203,6 +242,13 @@ public class RigidbodyFirstPersonController : NetworkBehaviour
             }
             m_Jump = false;
         }
+    }
+
+    [Command]
+    public void CmdChangeLightStatus(NetworkInstanceId id, int status)
+    {
+        TransportLayer layer = GameObject.FindObjectOfType<TransportLayer>();
+        layer.RpcChangeLightStatus(id, status);
     }
 
     public void kill()

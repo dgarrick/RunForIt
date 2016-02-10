@@ -85,79 +85,6 @@ NavMeshSettings:
     cellSize: 0.16666667
     manualCellSize: 0
   m_NavMeshData: {fileID: 23800000, guid: 1e153108967c1f64cab72febe0b09f1d, type: 2}
---- !u!1 &544076530
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 4
-  m_Component:
-  - 4: {fileID: 544076533}
-  - 114: {fileID: 544076532}
-  - 114: {fileID: 544076531}
-  m_Layer: 0
-  m_Name: TransportLayer
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &544076531
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 544076530}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ce4d69930996451499ee8d167f631674, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  owner: 
---- !u!114 &544076532
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 544076530}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 372142912, guid: 870353891bb340e2b2a9c8707e7419ba, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SceneId:
-    m_Value: 0
-  m_AssetId:
-    i0: 0
-    i1: 0
-    i2: 0
-    i3: 0
-    i4: 0
-    i5: 0
-    i6: 0
-    i7: 0
-    i8: 0
-    i9: 0
-    i10: 0
-    i11: 0
-    i12: 0
-    i13: 0
-    i14: 0
-    i15: 0
-  m_ServerOnly: 0
-  m_LocalPlayerAuthority: 1
---- !u!4 &544076533
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 544076530}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 32.34765, y: 24.0181, z: 28.468218}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 2
 --- !u!1001 &556615384
 Prefab:
   m_ObjectHideFlags: 0
@@ -203,6 +130,48 @@ Prefab:
       objectReference: {fileID: 111986, guid: d3a43d45ead230840b34cc0c2637e44b, type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: e7457e5b9589a854f8c05229a9b99038, type: 2}
+  m_IsPrefabParent: 0
+--- !u!1001 &924730537
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 485084, guid: 9778e353c572226409dc4556e02b4c2b, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 32.34765
+      objectReference: {fileID: 0}
+    - target: {fileID: 485084, guid: 9778e353c572226409dc4556e02b4c2b, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 24.0181
+      objectReference: {fileID: 0}
+    - target: {fileID: 485084, guid: 9778e353c572226409dc4556e02b4c2b, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 28.468218
+      objectReference: {fileID: 0}
+    - target: {fileID: 485084, guid: 9778e353c572226409dc4556e02b4c2b, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 485084, guid: 9778e353c572226409dc4556e02b4c2b, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 485084, guid: 9778e353c572226409dc4556e02b4c2b, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 485084, guid: 9778e353c572226409dc4556e02b4c2b, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 485084, guid: 9778e353c572226409dc4556e02b4c2b, type: 2}
+      propertyPath: m_RootOrder
+      value: 3
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: 9778e353c572226409dc4556e02b4c2b, type: 2}
   m_IsPrefabParent: 0
 --- !u!1001 &1205887109
 Prefab:
@@ -276,7 +245,7 @@ Light:
   serializedVersion: 6
   m_Type: 1
   m_Color: {r: 0.5716371, g: 0.6370654, b: 0.71323526, a: 1}
-  m_Intensity: 0.98
+  m_Intensity: 0.3
   m_Range: 10
   m_SpotAngle: 30
   m_CookieSize: 10

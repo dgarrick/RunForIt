@@ -31,9 +31,29 @@ public class TransportLayer : NetworkBehaviour {
     }
 
     [Command]
+    public void CmdChangeLightStatus(NetworkInstanceId id, int status)
+    {
+        RpcChangeLightStatus(id, status);
+    }
+
+    [Command]
     public void CmdPickupLight(NetworkInstanceId id)
     {
         RpcAttachLight(id);
+    }
+
+    [ClientRpc]
+    public void RpcChangeLightStatus(NetworkInstanceId id, int status)
+    {
+        foreach (GameObject player in players)
+        {
+            if (player.GetComponent<NetworkIdentity>().netId == id)
+            {
+                FlashlightScript theirLight = player.GetComponentInChildren<FlashlightScript>();
+                if (theirLight != null)
+                    theirLight.changeStatus(status);
+            }
+        }
     }
 
     [ClientRpc]
@@ -44,7 +64,8 @@ public class TransportLayer : NetworkBehaviour {
         {
             if (player.GetComponent<NetworkIdentity>().netId == id)
             {
-                GameObject attachedLight = Instantiate(lightPrefab, new Vector3(player.transform.position.x + 1.0f, player.transform.position.y - 1.0f, player.transform.position.z - 1.0f), player.transform.rotation) as GameObject;
+                Vector3 spawnPos = player.transform.position + player.transform.forward + player.transform.right;
+                GameObject attachedLight = Instantiate(lightPrefab, spawnPos, player.transform.rotation) as GameObject;
                 Debug.Log(player.transform);
                 attachedLight.transform.SetParent(player.transform);
             }

@@ -3,7 +3,6 @@ using System.Collections;
 
 public class FlashlightScript : MonoBehaviour
 {
-
     private float charge;
     private Light beam;
     private bool isOn;
@@ -19,23 +18,32 @@ public class FlashlightScript : MonoBehaviour
     }
 
     void Update() {
-        if (Input.GetMouseButtonDown(0)) {
+
+    }
+
+    public void changeStatus(int status)
+    {
+        if (status == 0) {
+            isOn = false;
             isBright = false;
-            if (isOn) 
-                beam.range = 0;
-            isOn = !isOn;  
         }
-        if (Input.GetMouseButtonDown(1))
+        else if (status == 1) {
+            isOn = true;
+            isBright = false;
+        }
+        else if (status == 2)
         {
             isOn = false;
-            if (isBright)
-                beam.range = 0;
-            isBright = !isBright;
+            isBright = true;
         }
     }
 
     void checkCharge()
     {
+        if (!isOn && !isBright)
+        {
+            beam.range = 0;
+        }
         if (isOn && charge > 0)
         {
             charge -= 0.1f;

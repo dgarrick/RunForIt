@@ -79,7 +79,7 @@ public class ObjectSpawner : NetworkBehaviour {
 
     void initialSpawns()
     {
-        if (false && SceneManager.GetActiveScene() == SceneManager.GetSceneByName("MainGame") && GameObject.FindGameObjectsWithTag("Player").Length != 0)
+        if (SceneManager.GetActiveScene() == SceneManager.GetSceneByName("MainGame") && GameObject.FindGameObjectsWithTag("Player").Length != 0)
         {
             initialSpawn = true;
             if (GameObject.FindGameObjectsWithTag("Monster").Length == 0)
