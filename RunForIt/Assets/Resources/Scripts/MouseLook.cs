@@ -3,8 +3,6 @@ using UnityEngine;
 using UnityEngine.Networking;
 using UnityStandardAssets.CrossPlatformInput;
 
-namespace UnityStandardAssets.Characters.FirstPerson
-{
     [Serializable]
     public class MouseLook
     {
@@ -68,4 +66,3 @@ namespace UnityStandardAssets.Characters.FirstPerson
         }
 
     }
-}

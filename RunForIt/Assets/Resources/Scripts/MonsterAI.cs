@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using UnityEngine.Networking;
-using UnityStandardAssets.Characters.FirstPerson;
 
 public class MonsterAI : NetworkBehaviour {
 

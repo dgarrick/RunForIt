@@ -71,7 +71,7 @@ public class ObjectSpawner : NetworkBehaviour {
         // Spawn a flashlight within 21.2 units of player
         GameObject flashLight = (GameObject)Instantiate(flashlightPrefab, 
                                                         new Vector3(player.transform.position.x + Random.Range(-15, 15),
-                                                                    player.transform.position.y+1,
+                                                                    player.transform.position.y-1,
                                                                     player.transform.position.z + Random.Range(-15, 15)),
                                                         new Quaternion());
         NetworkServer.Spawn(flashLight);
@@ -79,7 +79,7 @@ public class ObjectSpawner : NetworkBehaviour {
 
     void initialSpawns()
     {
-        if (SceneManager.GetActiveScene() == SceneManager.GetSceneByName("MainGame") && GameObject.FindGameObjectsWithTag("Player").Length != 0)
+        if (false && SceneManager.GetActiveScene() == SceneManager.GetSceneByName("MainGame") && GameObject.FindGameObjectsWithTag("Player").Length != 0)
         {
             initialSpawn = true;
             if (GameObject.FindGameObjectsWithTag("Monster").Length == 0)

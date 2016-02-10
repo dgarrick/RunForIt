@@ -5,8 +5,6 @@ using UnityStandardAssets.Utility;
 using UnityEngine.Networking;
 using Random = UnityEngine.Random;
 
-namespace UnityStandardAssets.Characters.FirstPerson
-{
     [RequireComponent(typeof (CharacterController))]
     [RequireComponent(typeof (AudioSource))]
     public class FirstPersonController : NetworkBehaviour
@@ -64,7 +62,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
         // Update is called once per frame
         private void Update()
         {
-			if (isLocalPlayer) {
+            if (isLocalPlayer) {
 				RotateView ();
 				// the jump state needs to read here to make sure it is not missed
 				if (!m_Jump) {
@@ -258,4 +256,3 @@ namespace UnityStandardAssets.Characters.FirstPerson
             body.AddForceAtPosition(m_CharacterController.velocity*0.1f, hit.point, ForceMode.Impulse);
         }
     }
-}
