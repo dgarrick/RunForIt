@@ -105,7 +105,7 @@ Light:
   m_Color: {r: 0.9293402, g: 0.9411765, b: 0.7266436, a: 1}
   m_Intensity: 8
   m_Range: 100
-  m_SpotAngle: 52
+  m_SpotAngle: 40
   m_CookieSize: 10
   m_Shadows:
     m_Type: 2
@@ -178,7 +178,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: m_SpotAngle
-      value: 52
+      value: 40
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: m_Intensity
