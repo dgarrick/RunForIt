@@ -14,7 +14,6 @@ public class FlashlightScript : MonoBehaviour
         isBright = false;
         beam = gameObject.GetComponent("Light") as Light;
         InvokeRepeating("checkCharge", 0, 0.2f);
-        beam.range = charge;
     }
 
     void Update() {
@@ -42,23 +41,20 @@ public class FlashlightScript : MonoBehaviour
     {
         if (!isOn && !isBright)
         {
-            beam.range = 0;
+			beam.intensity = 0;
         }
         if (isOn && charge > 0)
         {
-            charge -= 0.1f;
-            beam.range = Mathf.Pow(charge, 2);
-            beam.intensity = 3;
+            charge -= 0.12f;
+			beam.intensity = Mathf.Log (charge, 3.2f);
         }
         else if(isBright && charge > 0)
         {
-            charge -= 0.3f;
-            beam.range = Mathf.Pow(charge,2);
-            beam.intensity = 8;
+            charge -= 0.36f;
+			beam.intensity = Mathf.Log (charge, 1.8f);
         }
         if (charge == 0)
         {
-            beam.range = 0;
             beam.intensity = 0;
         }
     }
