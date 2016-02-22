@@ -3,6 +3,9 @@ using UnityEngine.Networking;
 
 public class MonsterAI : NetworkBehaviour {
 
+	// -------------------------------
+	// Monster attributes and objects
+	// -------------------------------
 	private NavMeshAgent agent;
     private GameObject[] playerObjs;
 
@@ -12,9 +15,11 @@ public class MonsterAI : NetworkBehaviour {
     // Tracks frames for efficient computations
     private int tick;
 
+	private int stunFrames;	//# of frames left that monster is stunned for
 
-
-    // Use this for initialization
+	// ------------------------
+	// Start & Update functions
+	// ------------------------
     void Start () {
         // Default values to prevent excess errors at startup
         playerObjs = new GameObject[0];
@@ -22,32 +27,40 @@ public class MonsterAI : NetworkBehaviour {
 		agent = GetComponent<NavMeshAgent>();
         tick = 0;
     }
-	
-	// Update is called once per frame
+
 	void Update () {
-        tick += 1;
+		// Reset tick if it gets huge. Just cleanup
+		if (tick > 1000000000) {
+			tick = 0;
+		} else tick += 1;
 
-        //Look for new targets every 5 seconds (@ 60 FPS)
-        if (tick % 300 == 0) {
-            //TODO move this line to startup code when it is written
-            playerObjs = GameObject.FindGameObjectsWithTag("Player");
-            considerNewTargets();
-        }
 
-        //Recompute where the current target is every 10th frame
-        if (tick % 10 == 0 && playerObjs.Length > 0) {
-            updateTargetTransform();
-            agent.SetDestination(targetTransform.position);
-        }
+		//If stunned, set target to self. Else, find closest player
+		if (stunFrames > 0) {
+			stunFrames--;
+			agent.SetDestination(transform.position);
+		} else {
 
-        // Reset tick if it gets huge. Just cleanup
-        if (tick > 1000000000) {
-            tick = 0;
-        }
+			//Look for new targets every 5 seconds (@ 60 FPS)
+			if (tick % 300 == 0) {
+				//TODO move this line to startup code when it is written
+				playerObjs = GameObject.FindGameObjectsWithTag("Player");
+				considerNewTargets();
+			}
+
+			//Recompute where the current target is every 10th frame
+			if (tick % 10 == 0 && playerObjs.Length > 0) {
+				updateTargetTransform();
+				agent.SetDestination(targetTransform.position);
+			}
+		}
 
         //TODO check if game ended here.
 	}
 
+	// ---------------
+	// Monster methods
+	// ---------------
     void updateTargetTransform() {
         if (targetObject == null)
             considerNewTargets();
@@ -75,4 +88,9 @@ public class MonsterAI : NetworkBehaviour {
             }
         }
     }
+
+	void stun(int duration) {
+		stunFrames = duration;
+	}
+
 }
