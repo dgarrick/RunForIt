@@ -23,11 +23,10 @@ public class CollisionDetection : NetworkBehaviour {
             if (other.gameObject.tag == "Player")
 			{
 				Debug.Log ("Collision with player!" + gameObject.name);
-				// Currently flashlights (inactive) are "Item"
 				if (gameObject.tag == "Item") {
 					Destroy (gameObject);
 					NetworkIdentity theirId = other.gameObject.GetComponent<NetworkIdentity> ();
-					transportLayer.CmdPickupLight (theirId.netId);
+					transportLayer.CmdPickupItem (theirId.netId, gameObject.name.Replace("Inactive", "").Replace("(Clone)", ""));
 				}
 				else if (gameObject.tag == "Battery") {
 					Destroy (gameObject);

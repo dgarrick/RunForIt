@@ -153,16 +153,12 @@ public class RigidbodyFirstPersonController : NetworkBehaviour
             }
             if (Input.GetMouseButtonDown(0))
             {
-                Debug.Log("Left click!");
                 if (flashlightStatus == 0 || flashlightStatus == 2)
                 {
-                    Debug.Log("On!");
                     CmdChangeLightStatus(gameObject.GetComponent<NetworkIdentity>().netId, 1);
                     flashlightStatus = 1;
                 }
-                else if (flashlightStatus == 1)
-                {
-                    Debug.Log("Off!");
+				else if (flashlightStatus == 1) {
                     CmdChangeLightStatus(gameObject.GetComponent<NetworkIdentity>().netId, 0);
                     flashlightStatus = 0;
                 }

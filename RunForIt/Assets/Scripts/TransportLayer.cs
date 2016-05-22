@@ -7,14 +7,17 @@ public class TransportLayer : NetworkBehaviour {
 
     public string owner;
     private HashSet<GameObject> players;
-    private GameObject lightPrefab;
+	private GameObject lightPrefab;    
+	private GameObject syringePrefab;
 	GameObject[] scrapedPlayers;
+	public enum ITEMTYPES {FLASHLIGHT, SYRINGE, NONE}
 
 
     // Use this for initialization
     void Start () {
         players = new HashSet<GameObject>();
         lightPrefab = Resources.Load("Prefabs/FlashLightActive") as GameObject;
+		syringePrefab = Resources.Load ("Prefabs/SyringeActive") as GameObject;
     }
 
     // Update is called once per frame
@@ -38,9 +41,14 @@ public class TransportLayer : NetworkBehaviour {
     }
 
     [Command]
-    public void CmdPickupLight(NetworkInstanceId id)
+	public void CmdPickupItem(NetworkInstanceId id, string name)
     {
-        RpcAttachLight(id);
+		ITEMTYPES type = ITEMTYPES.NONE;
+		if (name.Equals ("FlashLight"))
+			type = ITEMTYPES.FLASHLIGHT;
+		else if (name.Equals ("Syringe"))
+			type = ITEMTYPES.SYRINGE;
+		RpcAttachItem (id, type);
     }
 
 	[Command]
@@ -64,17 +72,26 @@ public class TransportLayer : NetworkBehaviour {
     }
 
     [ClientRpc]
-    public void RpcAttachLight(NetworkInstanceId id)
+	public void RpcAttachItem(NetworkInstanceId id, ITEMTYPES type)
     {
-        //Debug.Log("Rpc received. Trying to attach a light to " + id);
         foreach (GameObject player in players)
         {
             if (player.GetComponent<NetworkIdentity>().netId == id)
             {
                 Vector3 spawnPos = player.transform.position + player.transform.forward + player.transform.right;
-                GameObject attachedLight = Instantiate(lightPrefab, spawnPos, player.transform.rotation) as GameObject;
-                Debug.Log(player.transform);
-                attachedLight.transform.SetParent(player.transform);
+				GameObject item;
+				switch (type) {
+					case ITEMTYPES.FLASHLIGHT:
+						item = Instantiate (lightPrefab, spawnPos, player.transform.rotation) as GameObject;
+						break;
+					case ITEMTYPES.SYRINGE:
+						item = Instantiate (syringePrefab, spawnPos, player.transform.rotation) as GameObject;
+						break;
+					default:
+						item = null;
+						break;
+				}
+                item.transform.SetParent(player.transform);
             }
         }
     }

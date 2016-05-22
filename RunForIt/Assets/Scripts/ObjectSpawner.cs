@@ -14,6 +14,7 @@ public class ObjectSpawner : NetworkBehaviour {
     private HashSet<GameObject> players;
     private GameObject batteryPrefab;
     private GameObject flashlightPrefab;
+	private GameObject syringePrefab;
     private GameObject monsterPrefab;
 
     private LinkedList<GameObject> batteries;
@@ -47,9 +48,10 @@ public class ObjectSpawner : NetworkBehaviour {
 
     void loadResources()
     {
-         batteryPrefab = Resources.Load("Prefabs/Batteries") as GameObject;
-         flashlightPrefab = Resources.Load("Prefabs/FlashLightInactive") as GameObject;
-         monsterPrefab = Resources.Load("Prefabs/Monster") as GameObject;
+    	batteryPrefab = Resources.Load("Prefabs/Batteries") as GameObject;
+		flashlightPrefab = Resources.Load("Prefabs/FlashLightInactive") as GameObject;         
+		syringePrefab = Resources.Load("Prefabs/SyringeInactive") as GameObject;
+    	monsterPrefab = Resources.Load("Prefabs/Monster") as GameObject;
     }
 
     void checkForNewPlayers()
@@ -69,12 +71,13 @@ public class ObjectSpawner : NetworkBehaviour {
     void spawnEssentialsNear(GameObject player)
     {
         // Spawn a flashlight within 21.2 units of player
-        GameObject flashLight = (GameObject)Instantiate(flashlightPrefab, 
+		GameObject prefab = (Random.Range(0, 2) == 0) ? flashlightPrefab : syringePrefab;
+        GameObject item = (GameObject)Instantiate(prefab, 
                                                         new Vector3(player.transform.position.x + Random.Range(-15, 15),
                                                                     player.transform.position.y+3,
                                                                     player.transform.position.z + Random.Range(-15, 15)),
                                                         new Quaternion());
-        NetworkServer.Spawn(flashLight);
+        NetworkServer.Spawn(item);
     }
 
     void initialSpawns()
